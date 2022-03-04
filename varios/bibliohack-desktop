@@ -202,6 +202,17 @@ sudo apt-get remove unattended-upgrades && echo "OK" || exit 1
 # sudo systemctl disable apt-daily.timer apt-daily-upgrade.timer
 # sudo systemctl disable apt-daily.service apt-daily-upgrade.service
 
+# tambien, segun https://askubuntu.com/questions/1364529/remove-updated-software-notification-on-20-04-2-lts
+## disable cron jobs for Update Notifier
+# sudo chmod -x /etc/cron.daily/update-notifier-common
+# sudo chmod -x /etc/cron.weekly/update-notifier-common
+# disable graphical Update Notifier application
+## mkdir -p ~/.config/autostart/
+## cp /etc/xdg/autostart/update-notifier.desktop ~/.config/autostart/
+## editar o agregar la linea X-GNOME-Autostart-enabled=false, o usar este grep:
+## grep -q "^X-$XDG_CURRENT_DESKTOP-Autostart-enabled" ~/.config/autostart/update-notifier.desktop && sed -i "s/X-$XDG_CURRENT_DESKTOP-Autostart-enabled=true/X-$XDG_CURRENT_DESKTOP-Autostart-enabled=false/" ~/.config/autostart/update-notifier.desktop || echo "X-$XDG_CURRENT_DESKTOP-Autostart-enabled=false" >> ~/.config/autostart/update-notifier.desktop
+# luego reiniciar!
+
 echo "Explorador de archivos muestra rutas que se pueden copiar"
 gsettings set org.gnome.nautilus.preferences always-use-location-entry true && echo "OK" || exit 1
 
